@@ -1,11 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app="myFirstApp" lang="en" >
 <head>
     <meta charset="UTF-8">
-    <title>Hello Coursera</title>
+    <script src="angular.min.js"></script>
+    <script src="app.js"></script>
+    <title>My first Angular js app</title>
 </head>
-<body>
- <h1>Hello coursera Students! I am thrilled about this course!</h1>
+<body >
+<h1>My First Angular app</h1>
+<div ng-controller="MyFirstController">
+ {{name}}
+    <br>
+    {{sayHello()}}
+    <br>
+    <input type="text" name="name" id="name" ng-model="name">
+    <!-- /# -->
+    <br>
+    Inside  my input is : {{name}}
+</div>
+
 
 
 </body>
