@@ -1,18 +1,71 @@
-<!DOCTYPE html>
-<html ng-app='DIApp'>
-  <head>
-    <meta charset="utf-8">
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Lunch Checker</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <style>
+        .message { font-size: 1.3em; font-weight: bold; }
+        .green {
+            color: green;
+        }
+        .red {
+            color: red;
+        }
+    </style>
     <script src="angular.min.js"></script>
-    <script src="app.js"></script>
-    <title>Dependency Injection in Javascript
-           (and AngularJS)</title>
-  </head>
-  <body>
-    <h1>Dependency Injection in Javascript
-        (and AngularJS)</h1>
-    <div ng-controller='DIController'>
-      <input type="text"
-             ng-model="name">
+</head>
+<body ng-app="LunchCheck">
+<div class="container" ng-controller="LunchCheckController">
+    <h1>Lunch Checker</h1>
+
+    <div class="form-group">
+        <input id="lunch-menu" type="text"
+               placeholder="list comma separated dishes you usually have for lunch"
+               class="form-control" ng-model="lunch">
     </div>
-  </body>
+    <div class="form-group">
+        <button class="btn btn-default" ng-click="checkLunch()">Check If Too Much</button>
+    </div>
+    <div class="form-group message {{class}}" >
+        <!-- Your message can go here. -->
+        {{message}}
+    </div>
+</div>
+<script>
+    (function () {
+        'use strict';
+
+        angular.module('LunchCheck', [])
+                .controller('LunchCheckController', LunchCheckController);
+
+        LunchCheckController.$inject = ['$scope'];
+
+        function LunchCheckController($scope) {
+            $scope.lunch = "";
+            $scope.class = "";
+            $scope.message = "";
+            $scope.nLunchItems  = 0;
+            $scope.checkLunch = function () {
+                if($scope.lunch == '') {
+                    $scope.message = "Please enter data first";
+                    $scope.class = 'red';
+                } else {
+                    $scope.items = $scope.lunch.split(',');
+                    $scope.nLunchItems = $scope.items.length;
+                    if ($scope.nLunchItems < 4 && $scope.nLunchItems > 0) {
+                        $scope.class = "green";
+                        $scope.message = "Enjoy";
+                    } else if ($scope.nLunchItems > 3) {
+                        $scope.message = "Too much";
+                    }
+                }
+                return [$scope.message, $scope.class] ;
+            }
+        }
+
+    })();
+
+</script>
+</body>
 </html>
